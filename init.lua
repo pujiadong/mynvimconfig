@@ -2,23 +2,24 @@ require("plugins")
 
 vim.api.nvim_command('colorscheme darcula')
 
-vim.o.number=true
-vim.o.mouse="a"
-vim.o.shiftwidth=4
-vim.o.softtabstop=4
-vim.o.termguicolors=true
-vim.o.showmode=false
-vim.o.smartcase=true
+vim.o.number=true           -- show line numbers
+vim.o.mouse="a"             -- enable mouse support
+vim.o.shiftwidth=4          -- size of an indent
+vim.o.softtabstop=4         -- number of spaces in tab when editing
+vim.o.termguicolors=true    -- enable 24-bit RGB colors
+vim.o.showmode=false        -- we don't need to see things like -- INSERT -- anymore
+vim.o.smartcase=true        -- smart case
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 1          -- required by nvim-tree
+vim.g.loaded_netrwPlugin = 1    -- required by nvim-tree
 
 require("nvim-tree").setup({
     view = {
-        width = 40
+        width = 40              -- width of the slide bar
     }
 })
 
+-- 当打开nvim-tree的侧边栏时，使文件顶部的文件标签自动偏移view的宽度
 vim.api.nvim_create_autocmd('FileType', {
     callback = function(tbl)
       local set_offset = require('bufferline.api').set_offset
@@ -67,16 +68,16 @@ map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
 vim.api.nvim_set_keymap('', ' ', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ' '
 -- Space+j
-vim.api.nvim_set_keymap('n', '<leader>j', ':NvimTreeToggle<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>j', ':NvimTreeToggle<CR>', { noremap = true })  -- 打开/关闭文件树
 
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)   -- 打开错误提示
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)           -- 跳转到上一个错误
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)           -- 跳转到下一个错误
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)   -- 打开错误列表
 
 
-require'lspconfig'.pyright.setup{}
-require'lspconfig'.tsserver.setup{}
+require'lspconfig'.pyright.setup{}    -- python
+require'lspconfig'.tsserver.setup{}   -- typescript
 
 
 -- Add additional capabilities supported by nvim-cmp
